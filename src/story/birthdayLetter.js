@@ -1,0 +1,21 @@
+export const letter = {
+  title: 'Dear Pooja ❤️',
+  paragraphs: [
+    'Sabse pehle, tumhe janamdin ki bahut saari shubhkaamnayein!',
+    'Aaj tumhare birthday par main tumhe kuch alag dena chahta tha. Kuch aisa jo sirf ek gift na ho, balki ek chhoti si yaad ban jaaye.',
+    'Yaad hai humari pehli mulaqat?',
+    'Shayad us din main zyada kuch keh nahi paaya tha. Tum toh jaanti hi ho, main kam bolta hoon. Lekin woh mulaqat mere liye khaas thi.',
+    'Uske baad dheere-dheere baatein shuru hui. Kabhi tumhara call, kabhi mera call, kabhi chhoti si conversation. Aur pata hi nahi chala kab tumse baat karna mere din ka ek achha hissa ban gaya.',
+    'Main shayad har baar apni feelings express nahi kar pata, lekin kuch baatein dil mein zaroor hoti hain.',
+    'Maine tumhare liye ek naam rakha hu — Petal. 🌸',
+    'Pata nahi kab ye naam mere zehan mein aaya, lekin ab ye mere liye bahut special hai.',
+    'Jaise ek chhota sa flower apni khoobsurati se aas-paas ki duniya ko special bana deta hai, waise hi tum bhi meri zindagi mein ek khoobsurat ehsaas lekar aayi ho.',
+    'Humare beech abhi faasle hain, lekin mujhe intezaar hai un khoobsurat lamhon ka jo hum aage saath mein jeeyenge.',
+    'Main nahi jaanta humari kahaani mein aage kitne naye chapters honge, lekin umeed hai ki har chapter mein muskurahat, understanding, care aur bahut saari achhi yaadein hongi.',
+    'Tum hamesha khush raho, muskurati raho aur apne saare sapne poore karo.',
+    'Happy Birthday once again, Pooja! ❤️',
+    'Keep smiling, my Petal. 🌸',
+  ],
+  closing: 'With lots of good wishes,',
+  signature: 'Nilesh ❤️',
+};

@@ -1,0 +1,80 @@
+{
+  "_note": "Single source of truth for the world. Game coords: x right, y up, z toward camera. Prop positions are island-local [dx, dz]. Blender reads this too (blender/scripts/build_world.py).",
+  "islands": [
+    { "id": "welcome", "name": "Welcome Island", "c": [0, 0], "r": 20, "h": 0, "seed": 1 },
+    { "id": "mau", "name": "Mau — The First Meeting", "c": [0, -52], "r": 17, "h": 0.6, "seed": 2 },
+    { "id": "garden", "name": "Garden of Memories", "c": [40, -84], "r": 21, "h": 1.2, "seed": 3 },
+    { "id": "distA", "name": "Distance Bridge", "c": [40, -132], "r": 9, "h": 1.6, "seed": 4 },
+    { "id": "distB", "name": "Distance Bridge", "c": [40, -186], "r": 9, "h": 1.6, "seed": 5 },
+    { "id": "kingdom", "name": "Birthday Kingdom", "c": [0, -232], "r": 27, "h": 2.2, "seed": 6 }
+  ],
+  "bridges": [
+    { "a": "welcome", "b": "mau", "type": "wood", "width": 3.2, "arch": 1.6 },
+    { "a": "mau", "b": "garden", "type": "stone", "width": 3.4, "arch": 1.2 },
+    { "a": "garden", "b": "distA", "type": "wood", "width": 3.2, "arch": 1.8 },
+    { "a": "distA", "b": "distB", "type": "grand", "width": 4.2, "arch": 2.6 },
+    { "a": "distB", "b": "kingdom", "type": "grand", "width": 4.2, "arch": 1.6 }
+  ],
+  "props": {
+    "welcome": [
+      ["torii", 0, -14, 0, 1.1],
+      ["tree_cherry", -8, -4, 0, 1.1], ["tree_cherry", 8, -9, 40, 1.0], ["tree_cherry", -12, 8, 80, 0.95],
+      ["tree_cherry", 14, 9, 120, 1.05], ["tree_cherry_small", 6, 15, 10, 1], ["tree_cherry_small", -6, 14, 200, 1],
+      ["tree_green", -15, -4, 0, 1], ["tree_green", 16, -5, 60, 0.9],
+      ["lantern_stone", -2.5, -11, 0, 1], ["lantern_stone", 2.5, -11, 0, 1], ["lantern_stone", -2.5, 4, 0, 1], ["lantern_stone", 2.5, 4, 0, 1],
+      ["bench", -6.5, 2, 90, 1], ["memory_stone", -9.5, -1.5, 0, 1],
+      ["signboard", 3.2, 9, -20, 1],
+      ["rock_a", 12, -14, 30, 1.4], ["rock_tall", 15, 0, 0, 1.2], ["rock_b", -16, 2, 70, 1.3], ["rock_flat", -12, -12, 20, 1.2],
+      ["bush_pink", -4, 8, 0, 1], ["bush_green", 5, 7, 0, 1], ["bush_pink", 9, 13, 0, 1], ["bush_green", -13, -8, 0, 1]
+    ],
+    "mau": [
+      ["house_a", -11, -4, 90, 1], ["house_b", -10.5, 5, 90, 1], ["house_c", -5, -12.5, 15, 1],
+      ["chhatri", 10, -1, 0, 1],
+      ["chair", 4.6, 1, 90, 1], ["chair", 7.4, 1, -90, 1],
+      ["bench", 6, 7, 180, 1],
+      ["lamp_post", -4, 10, 0, 1], ["lamp_post", -4, 0, 0, 1], ["lamp_post", -3, -8, 0, 1], ["lamp_post", 3.5, 12, 0, 1],
+      ["flower_pot", -8.3, -1.5, 0, 1], ["flower_pot", -8, 2, 0, 1], ["flower_pot", -7.8, 7.5, 0, 1], ["flower_pot", 3, 4, 0, 1], ["flower_pot", 9, 4, 0, 1],
+      ["signboard", 2.5, 14, 0, 1],
+      ["tree_green", 12, 6, 0, 1], ["tree_cherry_small", 13.5, 3.5, 30, 1], ["tree_green", -13, 13, 50, 0.9], ["tree_cherry_small", 0, -14, 0, 1],
+      ["bush_green", 2, 7, 0, 0.8], ["bush_pink", 10, 9, 0, 0.9], ["rock_b", 14, -8, 0, 1]
+    ],
+    "garden": [
+      ["gazebo", 0, 0, 30, 1], ["diary", 0, 0, 30, 1],
+      ["tree_cherry", -9, -8, 0, 1.1], ["tree_cherry", 9, -9, 50, 1.05], ["tree_cherry", 15, 0, 100, 1], ["tree_cherry", -12, 4, 150, 1.1],
+      ["tree_cherry", 4, 14, 200, 1], ["tree_cherry", -6, -15, 250, 0.95], ["tree_cherry_small", -15, -6, 0, 1], ["tree_cherry_small", 6, -16, 0, 1],
+      ["bench", -6, 1, 90, 1], ["bench", 6, -2, -90, 1], ["bench", -3, -7, 20, 1],
+      ["lantern_wood", -11, 8, 0, 1], ["lantern_wood", -7, 4.5, 0, 1], ["lantern_wood", 2, -8, 0, 1], ["lantern_wood", -2, -14, 0, 1], ["lantern_wood", 3, -17, 0, 1],
+      ["rock_tall", 16, 13, 0, 1.6], ["rock_a", 13.5, 15, 40, 1.3], ["rock_a", 17.5, 10, 80, 1.1],
+      ["bush_pink", -9, 12, 0, 1], ["bush_pink", 8, 4, 0, 0.9], ["bush_green", -14, -1, 0, 1], ["bush_pink", -1, 9, 0, 0.8]
+    ],
+    "distA": [
+      ["lantern_stone", 2.2, -6, 0, 1], ["lantern_stone", -2.2, -6, 0, 1],
+      ["tree_cherry_small", 5, 3, 0, 0.9], ["rock_a", -6, -2, 0, 1], ["bush_pink", -5, 5, 0, 0.8]
+    ],
+    "distB": [
+      ["phone_booth", 3.5, -0.5, -90, 1],
+      ["lantern_stone", 1.8, 6, 0, 1], ["lantern_stone", -1.8, 6, 0, 1],
+      ["tree_cherry_small", 5.5, 4, 0, 0.9], ["rock_b", 5, -5, 0, 1], ["bush_pink", 0, -5, 0, 0.8]
+    ],
+    "kingdom": [
+      ["tree_cherry_hero", 0, -12, 0, 1],
+      ["pavilion", 15, -6, -90, 1],
+      ["torii", 12.5, 14.5, 41, 1.2],
+      ["cake", -7, 4, 0, 1], ["gift", -8.5, 5.5, 20, 1], ["gift", -5.5, 6, -10, 0.8], ["gift", -8.6, 2.6, 45, 0.7],
+      ["balloon", -10, 6, 0, 1], ["balloon", -9.6, 7.2, 0, 1], ["balloon", 6, 12.5, 0, 1], ["balloon", 7, 13.5, 0, 1], ["balloon", 6, -14, 0, 1],
+      ["lantern_stone", 4.5, 8.5, 0, 1], ["lantern_stone", 11.5, 8.5, 0, 1], ["lantern_stone", -6.5, -6.5, 0, 1], ["lantern_stone", 6.5, -6.5, 0, 1],
+      ["lantern_wood", -6.5, 6.5, 0, 1], ["lantern_wood", 7, 4, 0, 1],
+      ["tree_cherry", -16, -10, 0, 1.1], ["tree_cherry", 14, -18, 60, 1.1], ["tree_cherry", -18, 6, 120, 1], ["tree_cherry", -10, 17, 180, 1], ["tree_cherry", 21, 4, 240, 0.9],
+      ["tree_cherry_small", -20, -2, 0, 1], ["tree_cherry_small", 0, 21, 0, 1], ["tree_cherry_small", -12, -19, 0, 1],
+      ["rock_tall", -22, -12, 0, 1.4], ["rock_a", 20, -12, 30, 1.3], ["bush_pink", -3, -6, 0, 1], ["bush_pink", 3, -6, 0, 1], ["bush_green", -12, 0, 0, 1]
+    ]
+  },
+  "petals": [
+    { "id": 1, "island": "welcome", "at": [-6.5, -2.5], "y": 1.3, "kind": "float" },
+    { "id": 2, "island": "mau", "at": [6, 1], "y": 1.4, "kind": "float" },
+    { "id": 3, "island": "garden", "at": [0, 0], "y": 1.9, "kind": "diary" },
+    { "id": 4, "island": "distB", "at": [3.5, -0.5], "y": 2.0, "kind": "phone" },
+    { "id": 5, "island": "kingdom", "at": [0, 0], "y": 1.5, "kind": "final" }
+  ],
+  "spawn": { "island": "welcome", "at": [0, 12], "yaw": 0 }
+}
