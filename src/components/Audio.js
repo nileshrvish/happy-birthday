@@ -272,7 +272,7 @@ export class AudioEngine {
       src.buffer = this.stepBuffer;
       src.playbackRate.value = 0.9 + Math.random() * 0.22;
       const g = ctx.createGain();
-      g.gain.value = 0.22 * soft * (0.85 + Math.random() * 0.3);
+      g.gain.value = 0.08 * soft * (0.85 + Math.random() * 0.3);
       src.connect(g).connect(this.master);
       src.start(t);
       return;

@@ -48,6 +48,6 @@ export const intro = [
 export const finale = {
   lead: "Somewhere in someone's heart, you have a special name...",
   name: 'POOJA SHARMA',
-  nickname: 'MY PETAL 🌸',
+  nickname: 'My Petal 🌸',
   birthday: 'HAPPY BIRTHDAY, POOJA! ❤️',
 };

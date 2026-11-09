@@ -125,12 +125,6 @@ export class CharacterController {
     if (g === null) { this.teleport(this.lastSafe.x, this.lastSafe.y, this.lastSafe.z); g = this.pos.y; }
 
     // vertical
-    if (this.enabled && inp.jump && this.grounded) {
-      this.vy = JUMP_V;
-      this.grounded = false;
-      audio.jump();
-      this.play('Jump', 0.1);
-    }
     this.vy -= GRAVITY * dt;
     this.pos.y += this.vy * dt;
     if (this.pos.y <= g) {
@@ -156,8 +150,7 @@ export class CharacterController {
 
     // animation state
     if (!this.override) {
-      if (!this.grounded) { if (this.currentName !== 'Jump') this.play('Jump', 0.15); }
-      else if (hs > 4.0) { this.play('Run', 0.2); this.actions.Run.timeScale = hs / 5.6; }
+      if (hs > 4.0) { this.play('Run', 0.2); this.actions.Run.timeScale = hs / 5.6; }
       else if (hs > 0.35) { this.play('Walk', 0.2); this.actions.Walk.timeScale = Math.max(0.6, hs / 2.3); }
       else this.play('Idle', 0.3);
     }

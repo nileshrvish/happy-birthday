@@ -1,6 +1,9 @@
 import './styles/main.css';
 import { Game } from './game/Game.js';
 import { UI } from './ui/UI.js';
+import { isTouch } from './components/Input.js';
+
+if (isTouch) document.body.classList.add('touch');
 
 const ui = new UI();
 const game = new Game(document.getElementById('game'), ui);

@@ -24,7 +24,7 @@ export class Input {
     addEventListener('keydown', (e) => {
       if (e.repeat) { if (e.code === 'Space') e.preventDefault(); return; }
       this.keys.add(e.code);
-      if (e.code === 'Space') { this.jump = true; e.preventDefault(); }
+      if (e.code === 'Space') e.preventDefault();
       if (e.code === 'KeyE' || e.code === 'Enter') this.interact = true;
     });
     addEventListener('keyup', (e) => this.keys.delete(e.code));
@@ -32,6 +32,7 @@ export class Input {
   }
 
   _bindMouse() {
+    if (isTouch) return; // touch devices use the drag-to-look handler; avoids pointer-lock from emulated mouse events
     const c = this.canvas;
     let dragging = false;
     c.addEventListener('mousedown', (e) => {
@@ -100,7 +101,6 @@ export class Input {
       for (const t of e.changedTouches) if (!this.lookTouch) this.lookTouch = { id: t.identifier, x: t.clientX, y: t.clientY };
     }, { passive: true });
     const tap = (id, fn) => document.getElementById(id).addEventListener('touchstart', (e) => { e.preventDefault(); fn(); }, { passive: false });
-    tap('btn-jump', () => (this.jump = true));
     tap('btn-act', () => (this.interact = true));
   }
 
@@ -124,7 +124,7 @@ export class Input {
     const out = {
       move: { x, y }, walk,
       look: { ...this.look }, zoom: this.zoom,
-      jump: this.jump && this.enabled, interact: this.interact && this.enabled,
+      jump: false, interact: this.interact && this.enabled,
       lastLookTime: this.lastLookTime,
     };
     this.look.x = this.look.y = 0;

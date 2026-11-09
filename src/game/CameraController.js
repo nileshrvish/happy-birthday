@@ -8,6 +8,7 @@ export class CameraController {
     this.yaw = 0;
     this.pitch = 0.32;
     this.dist = 6.5;
+    this.distScale = 1;
     this.target = new THREE.Vector3();
     this.smoothTarget = new THREE.Vector3();
     this.cine = null; // {pos, look}
@@ -56,9 +57,9 @@ export class CameraController {
   _place() {
     const cp = Math.cos(this.pitch);
     const follow = new THREE.Vector3(
-      this.smoothTarget.x + Math.sin(this.yaw) * cp * this.dist,
-      this.smoothTarget.y + Math.sin(this.pitch) * this.dist,
-      this.smoothTarget.z + Math.cos(this.yaw) * cp * this.dist,
+      this.smoothTarget.x + Math.sin(this.yaw) * cp * this.dist * this.distScale,
+      this.smoothTarget.y + Math.sin(this.pitch) * this.dist * this.distScale,
+      this.smoothTarget.z + Math.cos(this.yaw) * cp * this.dist * this.distScale,
     );
     const g = this.world.groundAt(follow.x, follow.z);
     if (g !== null && follow.y < g + 0.5) follow.y = g + 0.5;

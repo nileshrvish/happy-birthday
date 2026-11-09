@@ -92,6 +92,8 @@ export class Game {
       try { localStorage.setItem('pba-quality', this.hq ? 'high' : 'low'); } catch (_) { /* ignore */ }
       this.applyQuality();
     };
+    const d0 = document.documentElement;
+    if (!(d0.requestFullscreen || d0.webkitRequestFullscreen)) document.getElementById('btn-full').classList.add('hidden'); // iPhone Safari
     document.getElementById('btn-full').onclick = () => {
       const d = document.documentElement;
       if (!document.fullscreenElement) (d.requestFullscreen || d.webkitRequestFullscreen)?.call(d);
@@ -104,8 +106,12 @@ export class Game {
     this.renderer.setSize(w, h, false);
     this.composer?.setSize(w, h);
     this.composer?.setPixelRatio(this.renderer.getPixelRatio());
-    this.camera.aspect = w / h;
+    const aspect = w / h;
+    this.camera.aspect = aspect;
+    // portrait phones see much less horizontally: widen the view and pull the camera back a little
+    this.camera.fov = aspect < 0.8 ? 68 : aspect < 1.2 ? 60 : 55;
     this.camera.updateProjectionMatrix();
+    if (this.cam) this.cam.distScale = aspect < 0.8 ? 1.25 : 1;
   }
 
   async start() {

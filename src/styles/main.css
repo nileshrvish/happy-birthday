@@ -10,7 +10,8 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { width: 100%; height: 100%; overflow: hidden; background: #1b1233; color: var(--ink);
-  font-family: 'Quicksand', system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none; }
+  font-family: 'Quicksand', system-ui, sans-serif; user-select: none; -webkit-user-select: none; touch-action: none;
+  -webkit-touch-callout: none; -webkit-text-size-adjust: 100%; overscroll-behavior: none; }
 #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; outline: none; }
 .hidden { display: none !important; }
 
@@ -33,6 +34,7 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1b1233; c
   filter: drop-shadow(0 4px 24px rgba(255, 111, 179, .55)); }
 #title .sub { font-size: clamp(14px, 1.8vw, 18px); opacity: .85; margin-bottom: 34px; }
 #title .hint { margin-top: 18px; opacity: .7; font-size: 14px; }
+#title .rotate-tip { display: none; margin-top: 14px; font-size: 13px; opacity: .75; }
 #title .credit { position: absolute; bottom: calc(18px + var(--safe-b)); font-family: 'Great Vibes', cursive; font-size: 26px; color: #ffd6ea; }
 
 .btn { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 17px; color: #fff; padding: 14px 34px; border-radius: 40px;
@@ -82,9 +84,13 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1b1233; c
   background: radial-gradient(circle at 35% 30%, #fff, var(--pink)); box-shadow: 0 0 20px rgba(255, 111, 179, .6); }
 .touch-btn { position: absolute; width: 72px; height: 72px; border-radius: 50%; border: 2px solid rgba(255, 200, 230, .45); background: var(--glass);
   color: #fff; font-size: 28px; pointer-events: auto; backdrop-filter: blur(6px); }
-#btn-jump { right: calc(26px + env(safe-area-inset-right, 0px)); bottom: calc(34px + var(--safe-b)); }
-#btn-act { right: calc(112px + env(safe-area-inset-right, 0px)); bottom: calc(80px + var(--safe-b)); }
-#btn-act.ready { background: linear-gradient(135deg, #ff6fb3, #b99bff); box-shadow: 0 0 26px rgba(255, 111, 179, .8); animation: pulse 1.4s infinite; }
+#btn-act { right: calc(28px + env(safe-area-inset-right, 0px)); bottom: calc(40px + var(--safe-b)); width: 84px; height: 84px; font-size: 34px;
+  opacity: .45; transition: opacity .3s, transform .1s; }
+#btn-act.ready { opacity: 1; background: linear-gradient(135deg, #ff6fb3, #b99bff); border-color: #fff; animation: actPulse 1.2s ease-in-out infinite; }
+@keyframes actPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 143, 199, .75), 0 0 24px rgba(255, 111, 179, .8); }
+  50% { transform: scale(1.12); box-shadow: 0 0 0 16px rgba(255, 143, 199, 0), 0 0 40px rgba(255, 111, 179, 1); }
+}
 
 /* ---------- captions ---------- */
 #caption { position: fixed; left: 0; right: 0; bottom: 18%; text-align: center; z-index: 15; pointer-events: none; padding: 0 20px;
@@ -93,7 +99,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1b1233; c
 #caption.show { opacity: 1; }
 
 /* ---------- story ---------- */
-#story { background: radial-gradient(circle at 50% 50%, rgba(40, 20, 70, .55), rgba(20, 10, 40, .78)); z-index: 30; animation: fadeIn .8s; overflow-y: auto; }
+#story { background: radial-gradient(circle at 50% 50%, rgba(40, 20, 70, .55), rgba(20, 10, 40, .78)); z-index: 30; animation: fadeIn .8s; overflow-y: auto;
+  touch-action: pan-y; -webkit-overflow-scrolling: touch; }
 .story-card { max-width: 680px; width: 100%; padding: clamp(22px, 4vw, 44px); border-radius: 26px; background: linear-gradient(160deg, rgba(255,255,255,.12), rgba(255,180,220,.06));
   border: 1px solid var(--glass-border); box-shadow: 0 20px 80px rgba(0,0,0,.4), inset 0 0 60px rgba(255, 143, 199, .08); backdrop-filter: blur(10px); margin: auto; }
 .chapter-kicker { font-size: 13px; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
@@ -123,7 +130,8 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1b1233; c
 #open-letter { pointer-events: auto; margin-top: 14px; }
 
 /* ---------- letter ---------- */
-#letter { z-index: 40; background: rgba(25, 12, 40, .6); animation: fadeIn 1.2s; overflow-y: auto; justify-content: flex-start; padding: 6vh 14px; }
+#letter { z-index: 40; background: rgba(25, 12, 40, .6); animation: fadeIn 1.2s; overflow-y: auto; justify-content: flex-start;
+  padding: max(6vh, env(safe-area-inset-top, 0px)) 14px calc(6vh + var(--safe-b)); touch-action: pan-y; -webkit-overflow-scrolling: touch; }
 .paper { position: relative; max-width: 720px; width: 100%; margin: 0 auto; padding: clamp(28px, 6vw, 64px) clamp(22px, 6vw, 70px); color: #4a2a3c; text-align: left;
   background: #fff8ef; border-radius: 6px; box-shadow: 0 30px 90px rgba(0,0,0,.5);
   background-image: radial-gradient(circle at 10% 0%, rgba(255, 196, 225, .5), transparent 40%), radial-gradient(circle at 100% 100%, rgba(255, 210, 122, .35), transparent 45%),
@@ -141,8 +149,101 @@ html, body { width: 100%; height: 100%; overflow: hidden; background: #1b1233; c
 #fade { position: fixed; inset: 0; background: #fff; opacity: 0; pointer-events: none; z-index: 45; transition: opacity 1s; }
 #fade.dark { background: #120a22; }
 
+/* ================================================================ responsive */
+.touch #controls-help { bottom: auto; top: calc(110px + env(safe-area-inset-top, 0px)); }
+.touch #prompt { bottom: calc(180px + var(--safe-b)); }
+.touch .btn:hover { transform: none; }
+.touch-btn:active, .icon-btn:active { transform: scale(.92); }
+.touch-btn { transition: transform .1s; display: grid; place-items: center; line-height: 1; }
+
+/* tablets & small laptops */
+@media (max-width: 900px) {
+  #objective { max-width: 40vw; font-size: 13px; }
+}
+
+/* phones in portrait */
 @media (max-width: 640px) {
-  #objective { top: calc(64px + env(safe-area-inset-top, 0px)); max-width: 86vw; font-size: 12px; }
+  #petal-tracker { top: calc(10px + env(safe-area-inset-top, 0px)); left: calc(10px + env(safe-area-inset-left, 0px)); padding: 6px 11px; gap: 7px; }
+  #petal-tracker .petals { gap: 2px; }
   #petal-tracker svg { width: 18px; height: 18px; }
-  #prompt { bottom: calc(190px + var(--safe-b)); }
+  #petal-count { font-size: 12px; }
+  #hud-buttons { top: calc(8px + env(safe-area-inset-top, 0px)); right: calc(8px + env(safe-area-inset-right, 0px)); gap: 6px; }
+  .icon-btn { width: 36px; height: 36px; font-size: 13px; }
+  #objective { top: calc(58px + env(safe-area-inset-top, 0px)); max-width: 92vw; font-size: 12px; padding: 6px 12px; }
+  #controls-help { white-space: normal; width: max-content; max-width: 92vw; text-align: center; font-size: 12px; }
+  .touch #controls-help { top: calc(96px + env(safe-area-inset-top, 0px)); }
+  #prompt { font-size: 14px; padding: 9px 16px; max-width: 92vw; }
+  #prompt span { overflow: hidden; text-overflow: ellipsis; }
+  #joy { width: 120px; height: 120px; left: calc(20px + env(safe-area-inset-left, 0px)); bottom: calc(26px + var(--safe-b)); }
+  #joy-knob { width: 52px; height: 52px; margin: -26px 0 0 -26px; }
+  .touch-btn { width: 68px; height: 68px; font-size: 26px; }
+    #btn-act { right: calc(24px + env(safe-area-inset-right, 0px)); bottom: calc(36px + var(--safe-b)); width: 80px; height: 80px; font-size: 32px; }
+  .touch #prompt { bottom: calc(180px + var(--safe-b)); }
+
+  #title h1 { font-size: clamp(30px, 10vw, 46px); }
+  #title .kicker { font-size: 15px; }
+  #start-btn { font-size: 18px; padding: 15px 40px; }
+  .touch #title .rotate-tip { display: block; }
+  #caption { bottom: 24%; font-size: 21px; }
+
+  .story-card { padding: 24px 18px; border-radius: 20px; }
+  .chapter-kicker { font-size: 11px; letter-spacing: .25em; }
+  .chapter-title { font-size: 24px; margin: 6px 0 12px; }
+  .shayari { margin-top: 14px; padding-top: 14px; }
+  .shayari p { font-size: 18px; line-height: 1.55; }
+  .story-next { width: 100%; }
+
+  #finale { gap: 6px; padding: 16px 18px; }
+  .f-lead { font-size: 22px; }
+  .f-name { font-size: 8vw; letter-spacing: .1em; }
+  .f-nick { font-size: 15vw; white-space: nowrap; }
+  .f-shayari p { font-size: 20px; }
+  .f-bday { font-size: 8.2vw; line-height: 1.25; }
+  #open-letter { width: min(320px, 90vw); }
+
+  .paper { padding: 34px 20px 26px; border-radius: 4px; }
+  .paper::before { top: 10px; right: 14px; font-size: 24px; }
+  .l-title { font-size: 40px; margin-bottom: 8px; }
+  .l-body p { font-size: 21px; line-height: 1.38; margin-bottom: 11px; }
+  .l-closing { font-size: 22px; }
+  .l-sign { font-size: 40px; }
+  .l-actions .btn { width: 100%; }
+}
+
+/* phones in landscape (short screens) */
+@media (max-height: 500px) and (orientation: landscape) {
+  #petal-tracker { top: calc(8px + env(safe-area-inset-top, 0px)); left: calc(10px + env(safe-area-inset-left, 0px)); padding: 5px 10px; }
+  #petal-tracker svg { width: 17px; height: 17px; }
+  #hud-buttons { top: 8px; right: calc(8px + env(safe-area-inset-right, 0px)); }
+  .icon-btn { width: 34px; height: 34px; font-size: 12px; }
+  #objective { top: 10px; font-size: 12px; padding: 5px 12px; max-width: 42vw; }
+  #controls-help, .touch #controls-help { top: 50px; bottom: auto; font-size: 11px; white-space: normal; max-width: 50vw; text-align: center; }
+  #prompt, .touch #prompt { bottom: calc(22px + var(--safe-b)); font-size: 13px; padding: 7px 14px; }
+  #joy { width: 112px; height: 112px; left: calc(18px + env(safe-area-inset-left, 0px)); bottom: 18px; }
+  #joy-knob { width: 48px; height: 48px; margin: -24px 0 0 -24px; }
+  .touch-btn { width: 60px; height: 60px; font-size: 24px; }
+    #btn-act { right: calc(22px + env(safe-area-inset-right, 0px)); bottom: 22px; width: 70px; height: 70px; font-size: 28px; }
+
+  #title { padding-top: 10px; }
+  #title h1 { font-size: 7vh; margin-bottom: 18px !important; }
+  #title .kicker { font-size: 14px; }
+  #start-btn { padding: 12px 36px; font-size: 17px; }
+  #title .hint { margin-top: 10px; }
+  #title .credit { bottom: 8px; font-size: 20px; }
+  #caption { bottom: 12%; font-size: 20px; }
+
+  #story { justify-content: flex-start; padding: 12px; }
+  .story-card { padding: 16px 22px; max-width: 620px; }
+  .chapter-title { font-size: 22px; margin: 4px 0 8px; }
+  .shayari { margin-top: 8px; padding-top: 8px; }
+  .shayari p { font-size: 17px; line-height: 1.45; }
+  .story-next { margin-top: 12px; padding: 10px 28px; }
+
+  #finale { gap: 4px; }
+  .f-lead { font-size: 20px; }
+  .f-name { font-size: 7vh; }
+  .f-nick { font-size: 15vh; white-space: nowrap; }
+  .f-shayari p { font-size: 19px; }
+  .f-bday { font-size: 8vh; }
+  #letter { padding: 14px; }
 }

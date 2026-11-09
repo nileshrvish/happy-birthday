@@ -37,8 +37,8 @@ export class UI {
   showControlsHelp() {
     const el = $('#controls-help');
     el.textContent = isTouch
-      ? 'Joystick to move · Drag to look · ⤒ jump · ✋ interact'
-      : 'WASD move · Mouse look (click to lock) · Shift walk · Space jump · E interact';
+      ? 'Left stick: move · Drag: look · ✋ when it glows'
+      : 'WASD move · Mouse look (click to lock) · Shift walk · E interact';
     el.classList.remove('hidden');
     el.style.opacity = 1;
     setTimeout(() => { el.style.opacity = 0; setTimeout(() => el.classList.add('hidden'), 1000); }, 9000);
@@ -56,7 +56,7 @@ export class UI {
 
   setPrompt(p) {
     if (!p) { this.prompt.classList.add('hidden'); $('#btn-act').classList.remove('ready'); return; }
-    this.prompt.classList.remove('hidden');
+    this.prompt.classList.toggle('hidden', isTouch && !p.locked);
     this.prompt.classList.toggle('locked', !!p.locked);
     this.prompt.querySelector('span').textContent = p.label;
     $('#btn-act').classList.toggle('ready', !p.locked);
