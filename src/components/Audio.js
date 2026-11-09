@@ -40,6 +40,7 @@ export class AudioEngine {
     this.noise = this._noiseBuffer(4);
     this._startAmbience();
     this._loadStep();
+    this._birds();
     this._loadStep();
     this.nextBeat = ctx.currentTime + 0.2;
     this.timer = setInterval(() => this._schedule(), 90);
@@ -111,11 +112,47 @@ export class AudioEngine {
     this.water = this._loopNoise('lowpass', 1600, 0.3, 0, this.amb);
   }
 
+  /** Soft, occasional birdsong — short chirp phrases from random directions (quiet, daytime only). */
+  _birds() {
+    const next = () => setTimeout(() => this._birds(), 2500 + Math.random() * 6000);
+    if (!this.ctx || this.mode !== 'explore' || (this.night || 0) > 0.5 || this.muted) return next();
+    const ctx = this.ctx;
+    const t0 = ctx.currentTime + 0.05;
+    const pan = ctx.createStereoPanner ? ctx.createStereoPanner() : ctx.createGain();
+    if (pan.pan) pan.pan.value = Math.random() * 1.6 - 0.8;
+    const out = ctx.createGain();
+    out.gain.value = 0.012 + Math.random() * 0.01; // kept low, a background detail
+    out.connect(pan).connect(this.amb);
+    const base = 2200 + Math.random() * 1600;
+    const kind = Math.floor(Math.random() * 3);
+    const notes = 2 + Math.floor(Math.random() * 5);
+    let t = t0;
+    for (let i = 0; i < notes; i++) {
+      const o = ctx.createOscillator();
+      o.type = 'sine';
+      const g = ctx.createGain();
+      const d = kind === 0 ? 0.07 : kind === 1 ? 0.12 : 0.05;
+      const f0 = base * (1 + (Math.random() - 0.5) * 0.15);
+      if (kind === 0) { o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f0 * 1.45, t + d); } // rising tweet
+      else if (kind === 1) { o.frequency.setValueAtTime(f0 * 1.4, t); o.frequency.exponentialRampToValueAtTime(f0 * 0.8, t + d); } // falling whistle
+      else { o.frequency.setValueAtTime(f0, t); o.frequency.linearRampToValueAtTime(f0 * 1.15, t + d / 2); o.frequency.linearRampToValueAtTime(f0, t + d); } // trill
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(1, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.001, t + d);
+      o.connect(g).connect(out);
+      o.start(t);
+      o.stop(t + d + 0.02);
+      t += d + (kind === 2 ? 0.025 : 0.06 + Math.random() * 0.08);
+    }
+    next();
+  }
+
   setWater(level) {
     if (this.water) this.water.g.gain.setTargetAtTime(Math.min(0.5, level * 0.5), this.ctx.currentTime, 0.3);
   }
 
   setNight(n) {
+    this.night = n;
     if (this.wind) this.wind.f.frequency.setTargetAtTime(420 - n * 140, this.ctx.currentTime, 1);
   }
 
@@ -235,7 +272,7 @@ export class AudioEngine {
       src.buffer = this.stepBuffer;
       src.playbackRate.value = 0.9 + Math.random() * 0.22;
       const g = ctx.createGain();
-      g.gain.value = 0.55 * soft * (0.85 + Math.random() * 0.3);
+      g.gain.value = 0.22 * soft * (0.85 + Math.random() * 0.3);
       src.connect(g).connect(this.master);
       src.start(t);
       return;
