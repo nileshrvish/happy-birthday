@@ -36,7 +36,7 @@ export function createSky() {
         c = mix(c, top, smoothstep(0.2, 0.85, h));
         c = mix(c, hor * 0.85, smoothstep(0.0, -0.4, h));
         float s = max(dot(d, sunDir), 0.0);
-        c += sunCol * (pow(s, 600.0) * 2.5 + pow(s, 12.0) * 0.35);
+        c += sunCol * (pow(s, 800.0) * 0.7 + pow(s, 16.0) * 0.12);
         if (stars > 0.0) {
           vec3 q = floor(d * 260.0);
           float st = step(0.9965, hash(q));

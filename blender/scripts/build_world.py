@@ -602,7 +602,9 @@ for b in LAYOUT['bridges']:
     A, B = isl[b['a']], isl[b['b']]
     a = Vector((A['c'][0], A['c'][1])); c = Vector((B['c'][0], B['c'][1]))
     d = (c - a).normalized()
-    p0 = a + d * A['r'] * 0.9; p1 = c - d * B['r'] * 0.9
+    def irr(i, ang):  # same irregular radius as src/environments/Terrain.js
+        return i['r'] * (1 + 0.07 * math.sin(3 * ang + i['seed']) + 0.045 * math.sin(5 * ang + i['seed'] * 2.3))
+    p0 = a + d * (irr(A, math.atan2(d.y, d.x)) - 2.5); p1 = c - d * (irr(B, math.atan2(-d.y, -d.x)) - 2.5)
     L = (p1 - p0).length
     n = int(L / 0.5)
     rz = math.atan2(-d.x, -d.y)  # local +Y follows the bridge direction (blender: x, -z)

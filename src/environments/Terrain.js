@@ -55,8 +55,11 @@ export function islandHeight(isl, x, z, pad = 0) {
 export const bridges = layout.bridges.map((b) => {
   const A = islandById[b.a], B = islandById[b.b];
   const dir = new THREE.Vector2(B.cx - A.cx, B.cz - A.cz).normalize();
-  const p0 = new THREE.Vector2(A.cx, A.cz).addScaledVector(dir, A.r * 0.9);
-  const p1 = new THREE.Vector2(B.cx, B.cz).addScaledVector(dir, -B.r * 0.9);
+  // anchor each end well inside the island's *actual* (irregular) walkable edge so there is never a gap
+  const rA = islandRadius(A, Math.atan2(dir.y, dir.x)) - 2.5;
+  const rB = islandRadius(B, Math.atan2(-dir.y, -dir.x)) - 2.5;
+  const p0 = new THREE.Vector2(A.cx, A.cz).addScaledVector(dir, rA);
+  const p1 = new THREE.Vector2(B.cx, B.cz).addScaledVector(dir, -rB);
   return { ...b, A, B, dir, perp: new THREE.Vector2(-dir.y, dir.x), p0, p1, L: p0.distanceTo(p1) };
 });
 
