@@ -23,9 +23,9 @@ export class Game {
     this.ui = ui;
     this.state = 'loading';
     let saved = null;
-    try { saved = localStorage.getItem('pba-quality'); } catch (_) { /* private mode */ }
-    this.hq = saved ? saved === 'high' : !isTouch;
-    this.quality = { density: isTouch ? 0.55 : 1, shadows: true };
+    try { saved = localStorage.getItem('pba-quality-v2'); } catch (_) { /* private mode */ }
+    this.hq = saved ? saved === 'high' : true; // HQ by default on every device
+    this.quality = { density: this.hq ? 1 : 0.55, shadows: true };
   }
 
   async load() {
@@ -74,7 +74,7 @@ export class Game {
   }
 
   applyQuality() {
-    const dpr = Math.min(devicePixelRatio, this.hq ? 2 : 1.25);
+    const dpr = Math.min(devicePixelRatio, this.hq ? (isTouch ? 1.75 : 2) : 1.25);
     this.renderer.setPixelRatio(dpr);
     this.world.sun.castShadow = this.hq || !isTouch;
     this.world.sun.shadow.mapSize.set(this.hq ? 2048 : 1024, this.hq ? 2048 : 1024);
@@ -89,7 +89,7 @@ export class Game {
     mute.onclick = () => { audio.setMuted(!audio.muted); mute.textContent = audio.muted ? '🔇' : '🔊'; };
     document.getElementById('btn-quality').onclick = () => {
       this.hq = !this.hq;
-      try { localStorage.setItem('pba-quality', this.hq ? 'high' : 'low'); } catch (_) { /* ignore */ }
+      try { localStorage.setItem('pba-quality-v2', this.hq ? 'high' : 'low'); } catch (_) { /* ignore */ }
       this.applyQuality();
     };
     const d0 = document.documentElement;
